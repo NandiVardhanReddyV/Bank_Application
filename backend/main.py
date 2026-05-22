@@ -1,5 +1,5 @@
 from site import venv
-from turtle import setup
+# from turtle import setup
 from unicodedata import name
 from fastapi.security import OAuth2PasswordRequestForm,HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import FastAPI,HTTPException,Depends
