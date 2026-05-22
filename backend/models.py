@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 # Database connection
 load_dotenv()
 
+DATABASE_URL = os.getenv("DATABASE_URL")
 #db_url = "postgresql://postgres:nandu2026@localhost:5432/nandudb"
-DATABASE_URL =os.getenv("DATABASE_URL","postgresql://postgres:nandu2026@localhost:5432/banking_db")
+#DATABASE_URL =os.getenv("DATABASE_URL","postgresql://postgres:nandu2026@localhost:5432/banking_db")
 #DATABASE_URL = "mysql+mysqlconnector://root:Nanvar2026@localhost/banking_db"
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()
