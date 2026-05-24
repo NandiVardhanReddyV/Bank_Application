@@ -282,7 +282,8 @@ function AccountsPage({ accounts, onRefresh, onToast }) {
 
   const COLORS = ["#4d96ff", "#c77dff", "#6bcb77", "#ffd93d", "#ff6b6b"];
 
-  const handleForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });  // ✅ single handler
+
   const createAccount = async () => {
     setLoading(true);
     try {
@@ -330,26 +331,30 @@ function AccountsPage({ accounts, onRefresh, onToast }) {
     setShowEdit(acc);
   };
 
-  const formFields =  (
+  // ✅ JSX variable — NOT a nested component function
+  const formFields = (
     <>
       <div className="form-group">
         <label className="form-label">Account Holder Name</label>
-        <input 
-          className="form-input" 
-          name = "name"
-          placeholder="Full name" 
-          value={form.name} 
-          onChange={handleForm} 
+        <input
+          className="form-input"
+          name="name"
+          placeholder="Full name"
+          value={form.name}
+          onChange={handleForm}
+          autoFocus
         />
       </div>
       <div className="form-group">
         <label className="form-label">Balance (₹)</label>
-        <input 
-        className="form-input" 
-        type="number" 
-        placeholder="0.00" 
-        value={form.balance} 
-        onChange= {handleForm} />
+        <input
+          className="form-input"
+          name="balance"
+          type="number"
+          placeholder="0.00"
+          value={form.balance}
+          onChange={handleForm}
+        />
       </div>
     </>
   );
@@ -399,13 +404,13 @@ function AccountsPage({ accounts, onRefresh, onToast }) {
 
       {showCreate && (
         <Modal title="Create Account" onClose={() => setShowCreate(false)} onSubmit={createAccount} loading={loading} submitLabel="Create">
-          <AccountForm />
+          {formFields}
         </Modal>
       )}
 
       {showEdit && (
         <Modal title="Edit Account" onClose={() => setShowEdit(null)} onSubmit={updateAccount} loading={loading} submitLabel="Save Changes">
-          <AccountForm />
+          {formFields}
         </Modal>
       )}
     </div>
