@@ -1,10 +1,7 @@
-from site import venv
-# from turtle import setup
-from unicodedata import name
-from fastapi.security import OAuth2PasswordRequestForm,HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import FastAPI,HTTPException,Depends
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 from uuid import uuid4
 from datetime import timedelta,datetime,timezone
 from sqlalchemy.orm import sessionmaker,Session
@@ -34,8 +31,7 @@ app.add_middleware(
 #In memory Storage for accounts and transaction
 SessionLocal = sessionmaker(autocommit = False,autoflush = False, bind = engine)
 
-accounts = {}
-transactions = {}
+
 
 # ----- DB dependency ----------
 def get_db():
@@ -78,6 +74,8 @@ class Account(BaseModel):
     name: str
     balance: float
 
+    model_config = {"from_attributes": True}
+
 class TransactionCreate(BaseModel):
     account_id:str
     amount: float
@@ -95,7 +93,9 @@ class TransactionWithAccount(BaseModel):
     account_id: str
     amount: float
     description: str
-    # model_config = {"from_attributes": True}  # ✅ Pydantic v2
+
+    model_config = {"from_attributes": True}
+
 
 # --- Auth routes -----------
 @app.post("/auth/register",response_model = UserResponse)
@@ -127,25 +127,25 @@ def login(form: OAuth2PasswordRequestForm = Depends(),db :Session = Depends(get_
     )
     return {"access_token": token,"token_type":"bearer"}
 
-@app.post("/auth/verify",response_model = None)
-def verify_token(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
+@app.get("/auth/verify", response_model=None)
+def verify_token(
+    token: str = Depends(oauth2_scheme)   # ← no HTTPBearer, no HTTPAuthorizationCredentials
+):
     try:
-        payload = jwt.decode(credentials.credentials,SECRET_KEY,algorithms=[ALGORITHM])
-        exp_utc = datetime.fromtimestamp(payload.get("exp"), tz = timezone.utc)
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        exp_utc = datetime.fromtimestamp(payload.get("exp"), tz=timezone.utc)
         exp_ist = exp_utc.astimezone(IST)
         now_ist = datetime.now(IST)
         remaining = exp_ist - now_ist
-
         return {
             "valid": True,
             "username": payload.get("sub"),
             "expires_at_ist": exp_ist.strftime("%Y-%m-%d %H:%M:%S IST"),
             "current_time_ist": now_ist.strftime("%Y-%m-%d %H:%M:%S IST"),
-            "minutes_remaining": max(0,int(remaining.total_seconds() / 60))
-
+            "minutes_remaining": max(0, int(remaining.total_seconds() / 60))
         }
     except JWTError:
-        raise HTTPException(status_code = 401,detail = "Invalid or expired token")
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
 
 #API endpoints for accounts
 @app.get("/accounts",response_model = List[Account])
@@ -222,7 +222,7 @@ def read_all_transactions(
 ):
     return db.query(TransactionModel).all()
 @app.get("/transactionswithaccount", response_model=List[TransactionWithAccount])
-def read_all_transactions(
+def read_transactions_with_account(
     db: Session = Depends(get_db),
     current_user : UserModel = Depends(get_current_user) #protected
 ):
