@@ -1,79 +1,72 @@
-/* ── Stat Cards (Dashboard) ── */
+/* ── Stat Cards ── */
 .stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-
-.stat-card:hover { transform: translateY(-2px); }
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(140,100,40,0.12); }
 .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
 .stat-card.c1::before { background: var(--c1); }
 .stat-card.c2::before { background: var(--c2); }
 .stat-card.c3::before { background: var(--c3); }
 .stat-card.c4::before { background: var(--c4); }
 
-.stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-.stat-value { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; }
-.stat-icon { position: absolute; right: 20px; top: 20px; font-size: 32px; opacity: 0.15; }
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px; font-weight: 600; }
+.stat-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--text); }
+.stat-icon { position: absolute; right: 20px; top: 20px; font-size: 28px; opacity: 0.9; }
 
 /* ── Account Cards ── */
 .account-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+  transition: all 0.2s; position: relative; overflow: hidden;
 }
+.account-card:hover { border-color: var(--c2); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212,160,23,0.15); }
 
-.account-card:hover {
-  border-color: var(--c4);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(77,150,255,0.15);
-}
-
-.account-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.account-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
-.account-number { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 1px; }
+.account-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 8px; }
+.account-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--text); }
+.account-number { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: 1px; font-family: monospace; }
 
 .account-badge {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  background: rgba(107,203,119,0.15);
-  color: var(--c3);
-  border: 1px solid rgba(107,203,119,0.3);
+  padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+  background: rgba(46,158,117,0.1); color: #1a6b4a;
+  border: 1px solid rgba(46,158,117,0.2); white-space: nowrap; flex-shrink: 0;
 }
 
-.account-balance-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
-.account-balance { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; }
+.account-balance-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.8px; }
+.account-balance { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; }
 
-.account-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
+.account-actions { display: flex; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
 
 /* ── Filter bar ── */
-.filter-bar {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+.filter-bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.filter-label { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.filter-select { max-width: 280px; flex: 1; min-width: 160px; }
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  .stat-value { font-size: 22px; }
+  .account-balance { font-size: 22px; }
+  .account-card { padding: 20px; }
 }
 
-.filter-label { font-size: 13px; color: var(--muted); white-space: nowrap; }
-.filter-select { max-width: 280px; }
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .stat-card { padding: 18px; }
+  .stat-value { font-size: 20px; }
+  .stat-icon { font-size: 24px; }
+  .account-card { padding: 16px; }
+  .account-name { font-size: 16px; }
+  .account-balance { font-size: 20px; }
+  .account-actions { flex-wrap: wrap; }
+  .account-actions .btn { flex: 1; justify-content: center; }
+  .filter-select { max-width: 100%; }
+}
+
+/* ── Small mobile ── */
+@media (max-width: 480px) {
+  .stat-card { padding: 14px; }
+  .stat-label { font-size: 10px; }
+  .stat-value { font-size: 18px; }
+}

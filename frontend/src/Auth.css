@@ -1,77 +1,73 @@
 .auth-page {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--dark2);
-  position: relative;
-  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cream);
+  position: relative; overflow: hidden;
+  padding: 20px;
 }
 
 .auth-bg {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(77,150,255,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(199,125,255,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 60% 80%, rgba(107,203,119,0.1) 0%, transparent 60%);
+    radial-gradient(ellipse at 15% 50%, rgba(212,160,23,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(58,127,212,0.1) 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 85%, rgba(46,158,117,0.08) 0%, transparent 55%);
 }
 
 .auth-card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 48px;
-  width: 100%;
-  max-width: 440px;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  border: 1px solid var(--border2);
+  border-radius: 24px; padding: 48px;
+  width: 100%; max-width: 440px;
+  position: relative; z-index: 1;
+  box-shadow: 0 20px 60px rgba(140,100,40,0.15);
 }
 
 .auth-logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--c4), var(--c5));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 30px; font-weight: 800;
+  color: var(--text); margin-bottom: 4px;
 }
-
+.auth-logo span { color: var(--c2); }
 .auth-tagline { color: var(--muted); font-size: 14px; margin-bottom: 36px; }
 
 .auth-tabs {
-  display: flex;
-  gap: 4px;
-  background: var(--dark2);
-  padding: 4px;
-  border-radius: 12px;
-  margin-bottom: 32px;
+  display: flex; gap: 4px;
+  background: var(--cream2); padding: 4px;
+  border-radius: 12px; margin-bottom: 32px;
 }
-
 .auth-tab {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
+  flex: 1; padding: 10px; border: none;
+  border-radius: 8px; cursor: pointer;
+  font-size: 14px; font-weight: 500;
   font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s;
-  background: transparent;
-  color: var(--muted);
+  transition: all 0.2s; background: transparent; color: var(--muted);
 }
-
 .auth-tab.active {
-  background: var(--card2);
-  color: var(--text);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  background: var(--card); color: var(--text);
+  box-shadow: 0 2px 8px rgba(140,100,40,0.12);
 }
 
 .auth-submit {
-  width: 100%;
-  justify-content: center;
-  padding: 14px !important;
+  width: 100%; justify-content: center;
+  padding: 14px !important; font-size: 15px !important;
+}
+
+/* ── Tablet ── */
+@media (max-width: 1024px) {
+  .auth-card { padding: 40px; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .auth-card { padding: 28px 24px; border-radius: 20px; }
+  .auth-logo { font-size: 26px; }
+  .auth-tagline { margin-bottom: 28px; }
+}
+
+/* ── Small mobile ── */
+@media (max-width: 480px) {
+  .auth-card { padding: 24px 20px; }
+  .auth-logo { font-size: 22px; }
+  .auth-tab { font-size: 13px; padding: 8px; }
 }

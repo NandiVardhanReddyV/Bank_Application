@@ -5,6 +5,9 @@ import "./Sidebar.css";
 import "./Auth.css";
 import "./Accounts.css";
 
+   
+
+
 const API = import.meta.env.VITE_API_URL;
 // const API = "http://127.0.0.1:8000";
 
@@ -94,9 +97,10 @@ function Modal({ title, onClose, onSubmit, loading, submitLabel, children }) {
   );
 }
 
-// ── Sidebar ────────────────────────────────────────────────────────────────────
+// ── Sidebar  with hamburger menu ─────────────────────────────────────────────────────────────
 function Sidebar({ page, setPage }) {
   const { user, logout } = useAuth();
+  const [open, setOpen] = useState(false);
 
   const navItems = [
     { id: "dashboard", icon: "🏠", label: "Dashboard" },
@@ -104,15 +108,27 @@ function Sidebar({ page, setPage }) {
     { id: "transactions", icon: "🔄", label: "Transactions" },
   ];
 
+  const handleNav = (id) =>{
+    setPage(id); setOpen(false);
+  };
+  
   return (
-    <aside className="sidebar">
-      <div className="sidebar-logo">💳 NovaPay</div>
+    <>
+    {/*Hamburger - mobile only*/}
+    <button className="hamburger" onClick={() => setOpen(!open)} aria-label="Menu">
+      {open ? "X" : "☰"}
+    </button>
+    {/* {Overlay-mobile only} */}
+    <div className={`sidebar-overlay ${open ? "open" : ""}`} onClick = {() => setOpen(false)} />
+    
+    <aside className={`sidebar ${open ?"open": ""}}`}>
+      <div className="sidebar-logo">💳 LAXMI <span>Bank</span></div>
 
       {navItems.map((n) => (
         <button
           key={n.id}
           className={`nav-item ${page === n.id ? "active" : ""}`}
-          onClick={() => setPage(n.id)}
+          onClick={() => handleNav(n.id)}
         >
           <span className="nav-icon">{n.icon}</span>
           <span>{n.label}</span>
@@ -125,6 +141,8 @@ function Sidebar({ page, setPage }) {
         <button className="logout-btn" onClick={logout}>Sign Out</button>
       </div>
     </aside>
+    </>
+    
   );
 }
 
@@ -186,7 +204,7 @@ function AuthPage({ onToast }) {
     <div className="auth-page">
       <div className="auth-bg" />
       <div className="auth-card">
-        <div className="auth-logo">💳 NovaPay</div>
+        <div className="auth-logo">💳 LAXMI<span>Bank</span></div>
         <p className="auth-tagline">Your modern banking dashboard</p>
 
         <div className="auth-tabs">
@@ -241,7 +259,7 @@ function Dashboard({ accounts, transactions }) {
       </div>
 
       <div className="card">
-        <h3 style={{ marginBottom: 20 }}>Recent Transactions</h3>
+        <h3 style={{ fontFamily:"'Playfair Display',serif",fontSize:18,marginBottom: 20 ,color:"var(--text)"}}>Recent Transactions</h3>
         {transactions.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">📭</div>
