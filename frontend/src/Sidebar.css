@@ -1,20 +1,24 @@
+/* ── Sidebar.css — replace the full file ── */
+
 .sidebar {
-  width: var(--sidebar-width);
+  width: 240px;
   background: var(--cream2);
   border-right: 1px solid var(--border2);
-  display: flex; flex-direction: column;
+  display: flex;
+  flex-direction: column;
   padding: 28px 16px;
-  position: fixed; height: 100vh; z-index: 200;
-  transition: transform 0.3s ease, width 0.3s ease;
+  position: fixed;
+  height: 100vh;
+  z-index: 200;
   overflow-y: auto;
+  transition: transform 0.3s ease;
 }
 
 .sidebar-logo {
   font-family: 'Playfair Display', serif;
   font-size: 22px; font-weight: 800;
   margin-bottom: 36px; padding: 0 8px;
-  color: var(--text); letter-spacing: -0.5px;
-  white-space: nowrap;
+  color: var(--text);
 }
 .sidebar-logo span { color: var(--c2); }
 
@@ -25,15 +29,13 @@
   color: var(--text2); transition: all 0.2s;
   margin-bottom: 4px; border: none;
   background: none; width: 100%; text-align: left;
-  white-space: nowrap;
 }
 .nav-item:hover { background: var(--cream3); color: var(--text); }
 .nav-item.active { background: var(--text); color: var(--cream); }
 .nav-icon { font-size: 18px; flex-shrink: 0; }
 
 .sidebar-user {
-  margin-top: auto;
-  padding: 16px;
+  margin-top: auto; padding: 16px;
   background: var(--card);
   border-radius: var(--radius);
   border: 1px solid var(--border2);
@@ -51,68 +53,73 @@
 }
 .logout-btn:hover { background: rgba(232,82,58,0.15); }
 
+/* ── Main content ── */
 .main-content {
-  margin-left: var(--sidebar-width);
+  margin-left: 240px;
   flex: 1; padding: 36px;
   min-height: 100vh;
   background: var(--cream);
-  transition: margin-left 0.3s ease;
 }
 
-/* ── Mobile hamburger button ── */
+/* ── Hamburger — HIDDEN on desktop ── */
 .hamburger {
-  display: none;
+  display: none;               /* ← hidden on desktop always */
   position: fixed;
-  top: 16px; left: 16px;
+  top: 14px; left: 14px;
   z-index: 300;
   background: var(--card);
   border: 1px solid var(--border2);
   border-radius: 10px;
-  padding: 8px 10px;
+  padding: 8px 12px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   box-shadow: var(--shadow);
+  line-height: 1;
 }
 
-/* ── Mobile overlay ── */
+/* ── Overlay ── */
 .sidebar-overlay {
   display: none;
   position: fixed; inset: 0;
-  background: rgba(45,31,14,0.4);
+  background: rgba(45,31,14,0.45);
   z-index: 150;
-  backdrop-filter: blur(2px);
 }
+.sidebar-overlay.open { display: block; }
 
 /* ── Tablet (1024px) ── */
 @media (max-width: 1024px) {
-  .sidebar { padding: 24px 12px; }
+  .sidebar { width: 200px; padding: 24px 12px; }
+  .main-content { margin-left: 200px; padding: 28px 20px; }
   .sidebar-logo { font-size: 18px; }
-  .main-content { padding: 28px 24px; }
 }
 
 /* ── Mobile (768px) ── */
 @media (max-width: 768px) {
-  .hamburger { display: flex; align-items: center; }
+  /* Show hamburger ONLY on mobile */
+  .hamburger { display: flex; align-items: center; justify-content: center; }
 
+  /* Sidebar hides off screen by default */
   .sidebar {
     width: 240px;
-    transform: translateX(-100%);
-    box-shadow: 4px 0 20px rgba(140,100,40,0.15);
+    transform: translateX(-100%);   /* ← hidden off screen */
+    box-shadow: 4px 0 24px rgba(140,100,40,0.2);
+    padding: 28px 16px;             /* ← restore full padding */
   }
 
+  /* Slide in when open */
   .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0);       /* ← slides in */
   }
 
-  .sidebar-overlay.open { display: block; }
-
+  /* Main content takes full width */
   .main-content {
     margin-left: 0;
-    padding: 72px 16px 24px;
+    padding: 72px 16px 24px;        /* ← top padding for hamburger */
   }
 }
 
 /* ── Small mobile (480px) ── */
 @media (max-width: 480px) {
   .main-content { padding: 68px 12px 20px; }
+  .hamburger { top: 12px; left: 12px; padding: 7px 10px; font-size: 16px; }
 }

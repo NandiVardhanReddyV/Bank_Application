@@ -100,49 +100,62 @@ function Modal({ title, onClose, onSubmit, loading, submitLabel, children }) {
 // ── Sidebar  with hamburger menu ─────────────────────────────────────────────────────────────
 function Sidebar({ page, setPage }) {
   const { user, logout } = useAuth();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen]  = useState(false);
 
   const navItems = [
-    { id: "dashboard", icon: "🏠", label: "Dashboard" },
-    { id: "accounts",  icon: "🏦", label: "Accounts"  },
+    { id: "dashboard",    icon: "🏠", label: "Dashboard"    },
+    { id: "accounts",     icon: "🏦", label: "Accounts"     },
     { id: "transactions", icon: "🔄", label: "Transactions" },
   ];
 
-  const handleNav = (id) =>{
-    setPage(id); setOpen(false);
+  // ✅ Close sidebar when clicking nav item on mobile
+  const handleNav = (id) => {
+    setPage(id);
+    setOpen(false);
   };
-  
+
+  // ✅ Close sidebar on window resize to desktop
+  useEffect(() => {
+    const handleResize = () => { if (window.innerWidth > 768) setOpen(false); };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
-    {/*Hamburger - mobile only*/}
-    <button className="hamburger" onClick={() => setOpen(!open)} aria-label="Menu">
-      {open ? "X" : "☰"}
-    </button>
-    {/* {Overlay-mobile only} */}
-    <div className={`sidebar-overlay ${open ? "open" : ""}`} onClick = {() => setOpen(false)} />
-    
-    <aside className={`sidebar ${open ?"open": ""}}`}>
-      <div className="sidebar-logo">💳 LAXMI <span>Bank</span></div>
+      {/* ✅ Hamburger — only visible on mobile via CSS */}
+      <button className="hamburger" onClick={() => setOpen(!open)} aria-label="Menu">
+        {open ? "✕" : "☰"}
+      </button>
 
-      {navItems.map((n) => (
-        <button
-          key={n.id}
-          className={`nav-item ${page === n.id ? "active" : ""}`}
-          onClick={() => handleNav(n.id)}
-        >
-          <span className="nav-icon">{n.icon}</span>
-          <span>{n.label}</span>
-        </button>
-      ))}
+      {/* ✅ Overlay — closes sidebar when tapped outside */}
+      <div
+        className={`sidebar-overlay ${open ? "open" : ""}`}
+        onClick={() => setOpen(false)}
+      />
 
-      <div className="sidebar-user">
-        <div className="username">👤 {user}</div>
-        <div className="role">Account Holder</div>
-        <button className="logout-btn" onClick={logout}>Sign Out</button>
-      </div>
-    </aside>
+      {/* ✅ Sidebar — slides in on mobile, always visible on desktop */}
+      <aside className={`sidebar ${open ? "open" : ""}`}>
+        <div className="sidebar-logo">Laxmi <span>Bank</span></div>
+
+        {navItems.map((n) => (
+          <button
+            key={n.id}
+            className={`nav-item ${page === n.id ? "active" : ""}`}
+            onClick={() => handleNav(n.id)}
+          >
+            <span className="nav-icon">{n.icon}</span>
+            <span>{n.label}</span>
+          </button>
+        ))}
+
+        <div className="sidebar-user">
+          <div className="username">👤 {user}</div>
+          <div className="role">Account Holder</div>
+          <button className="logout-btn" onClick={logout}>Sign Out</button>
+        </div>
+      </aside>
     </>
-    
   );
 }
 
