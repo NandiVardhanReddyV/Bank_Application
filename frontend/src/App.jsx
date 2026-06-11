@@ -237,6 +237,12 @@ function AuthPage({ onToast }) {
         <button className="btn btn-primary auth-submit" onClick={tab === "login" ? handleLogin : handleRegister} disabled={loading}>
           {loading ? <span className="spinner" /> : (tab === "login" ? "Login →" : "Create Account →")}
         </button>
+        {/* ✅ ADD HERE — right after the button, still inside auth-card div */}
+        <div className="demo-hint">
+          <p className="demo-title">🔑 Demo Credentials</p>
+          <p className="demo-text">Username: <strong>bindu</strong></p>
+          <p className="demo-text">Password: <strong>bindu</strong></p>
+        </div>
       </div>
     </div>
   );

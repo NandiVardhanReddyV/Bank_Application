@@ -52,6 +52,33 @@
   width: 100%; justify-content: center;
   padding: 14px !important; font-size: 15px !important;
 }
+/* ── Demo Credentials hint ── */
+.demo-hint {
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: var(--cream2);
+  border: 1px dashed var(--border2);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.demo-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.demo-text {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.demo-text strong {
+  color: var(--c2);
+  font-weight: 600;
+}
 
 /* ── Tablet ── */
 @media (max-width: 1024px) {
