@@ -1,4 +1,4 @@
-# 💳 NovaPay — Banking Management System
+# Banking Management System
 
 A full-stack banking management system built with **FastAPI**, **PostgreSQL**, and **React (Vite)**. Features JWT authentication, secure password hashing, account management, and transaction tracking.
 
